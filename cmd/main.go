@@ -11,6 +11,8 @@ import (
 func main() {
 	fmt.Println("Hi, I'm logical interviewer >>> starting API (gRPC service)....")
 
+	// TODO: add log
+	// TODO: add config
 	imStore := store.InMemory{}
 	interviewer := interviewer.Interviewer{DB: imStore}
 	api.NewAPIServer(interviewer)
