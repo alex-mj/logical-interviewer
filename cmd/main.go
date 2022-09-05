@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	fmt.Println("Hi, I'm logical gRPC service")
+	fmt.Println("Hi, I'm logical interviewer >>> starting API (gRPC service)....")
 
 	imStore := store.InMemory{}
-	Interviewer := interviewer.Interviewer{DB: imStore}
-	api.NewAPIServer(Interviewer)
+	interviewer := interviewer.Interviewer{DB: imStore}
+	api.NewAPIServer(interviewer)
 }
