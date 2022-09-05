@@ -1,0 +1,53 @@
+syntax = "proto3";
+package logicalInterview;
+option go_package = "/interview";
+
+import "google/protobuf/duration.proto";  
+import "google/protobuf/timestamp.proto";
+
+service LogicalInterview {
+    rpc GetResult(User) returns (Result);
+    rpc GetQuestion(User) returns (Question);
+    rpc SendAnswer(Ansver) returns (AnswerResponce);
+    rpc GetSummary(User) returns (Summary);
+}
+
+message User {
+    string id = 1;
+}
+
+message Result {
+    int32 scores = 1; //points scored
+    google.protobuf.Timestamp dateTime   = 2; // date of passage
+    google.protobuf.Duration duration = 3; // time spent on the test
+    int32  newAttempInXDay = 4; // if 0 test available now
+}
+
+message Question {
+    string id = 1;
+    string condition = 2;
+    repeated QuestionOption questionOption = 3;
+}
+
+message QuestionOption {
+    string id = 1;
+    string data = 2;
+    bool customerChoice = 3;
+    bool correct = 4;
+}
+
+message Ansver {
+    string userId = 1;
+    string questionId = 2;
+    string answerId = 3;
+}
+
+message AnswerResponce {
+    int32 ansvered = 1;
+    int32 goal = 2;
+    google.protobuf.Duration timeLeft = 3; 
+}
+
+message Summary {
+    repeated Question Questions = 1;
+}
