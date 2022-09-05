@@ -2,6 +2,8 @@
 
 under construction
 
+![alt text](design.jpeg)
+
 flow:
 
 1) HR registers the candidate (UserID enters the system).
