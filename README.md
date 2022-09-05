@@ -1,4 +1,4 @@
-# online logic interviewer
+# online logical interviewer
 
 under construction
 
