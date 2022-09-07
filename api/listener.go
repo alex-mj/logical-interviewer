@@ -4,16 +4,16 @@ import (
 	"log"
 	"net"
 
-	domain "github.com/alex-mj/logical-interview/service"
+	interview "github.com/alex-mj/logical-interview/service"
 	pb "github.com/alex-mj/logical-interview/service/api/proto/interview"
 	"google.golang.org/grpc"
 )
 
-func NewAPIServer(Interviewer domain.Interviewer) InterviewServer {
+func NewAPIServer(intwr interview.Interviewer) ApiServer {
 
 	s := grpc.NewServer()
-	InterviewServer := InterviewServer{Interviewer: Interviewer}
-	pb.RegisterLogicalInterviewServer(s, InterviewServer)
+	InterviewServer := ApiServer{Interviewer: intwr}
+	pb.RegisterLogicalInterviewServer(s, &InterviewServer)
 
 	listener, err := net.Listen("tcp", ":8081")
 	if err != nil {

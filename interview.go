@@ -37,5 +37,5 @@ type LastResult struct {
 }
 
 type Interviewer interface {
-	
+	GetNextQuestion(UserID) Question
 }

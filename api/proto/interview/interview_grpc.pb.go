@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LogicalInterviewClient interface {
 	GetResult(ctx context.Context, in *User, opts ...grpc.CallOption) (*Result, error)
-	GetQuestion(ctx context.Context, in *User, opts ...grpc.CallOption) (*Question, error)
+	GetNextQuestion(ctx context.Context, in *User, opts ...grpc.CallOption) (*Question, error)
 	SendAnswer(ctx context.Context, in *Ansver, opts ...grpc.CallOption) (*AnswerResponce, error)
 	GetSummary(ctx context.Context, in *User, opts ...grpc.CallOption) (*Summary, error)
 }
@@ -45,9 +45,9 @@ func (c *logicalInterviewClient) GetResult(ctx context.Context, in *User, opts .
 	return out, nil
 }
 
-func (c *logicalInterviewClient) GetQuestion(ctx context.Context, in *User, opts ...grpc.CallOption) (*Question, error) {
+func (c *logicalInterviewClient) GetNextQuestion(ctx context.Context, in *User, opts ...grpc.CallOption) (*Question, error) {
 	out := new(Question)
-	err := c.cc.Invoke(ctx, "/logicalInterview.LogicalInterview/GetQuestion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/logicalInterview.LogicalInterview/GetNextQuestion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *logicalInterviewClient) GetSummary(ctx context.Context, in *User, opts 
 // for forward compatibility
 type LogicalInterviewServer interface {
 	GetResult(context.Context, *User) (*Result, error)
-	GetQuestion(context.Context, *User) (*Question, error)
+	GetNextQuestion(context.Context, *User) (*Question, error)
 	SendAnswer(context.Context, *Ansver) (*AnswerResponce, error)
 	GetSummary(context.Context, *User) (*Summary, error)
 	mustEmbedUnimplementedLogicalInterviewServer()
@@ -90,8 +90,8 @@ type UnimplementedLogicalInterviewServer struct {
 func (UnimplementedLogicalInterviewServer) GetResult(context.Context, *User) (*Result, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetResult not implemented")
 }
-func (UnimplementedLogicalInterviewServer) GetQuestion(context.Context, *User) (*Question, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetQuestion not implemented")
+func (UnimplementedLogicalInterviewServer) GetNextQuestion(context.Context, *User) (*Question, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNextQuestion not implemented")
 }
 func (UnimplementedLogicalInterviewServer) SendAnswer(context.Context, *Ansver) (*AnswerResponce, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendAnswer not implemented")
@@ -130,20 +130,20 @@ func _LogicalInterview_GetResult_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogicalInterview_GetQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LogicalInterview_GetNextQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogicalInterviewServer).GetQuestion(ctx, in)
+		return srv.(LogicalInterviewServer).GetNextQuestion(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/logicalInterview.LogicalInterview/GetQuestion",
+		FullMethod: "/logicalInterview.LogicalInterview/GetNextQuestion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogicalInterviewServer).GetQuestion(ctx, req.(*User))
+		return srv.(LogicalInterviewServer).GetNextQuestion(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -196,8 +196,8 @@ var LogicalInterview_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LogicalInterview_GetResult_Handler,
 		},
 		{
-			MethodName: "GetQuestion",
-			Handler:    _LogicalInterview_GetQuestion_Handler,
+			MethodName: "GetNextQuestion",
+			Handler:    _LogicalInterview_GetNextQuestion_Handler,
 		},
 		{
 			MethodName: "SendAnswer",

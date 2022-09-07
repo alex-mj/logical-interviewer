@@ -6,10 +6,10 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 service LogicalInterview {
-    rpc GetResult(User) returns (Result);
-    rpc GetQuestion(User) returns (Question);
+    rpc GetNextQuestion(User) returns (Question);
     rpc SendAnswer(Ansver) returns (AnswerResponce);
     rpc GetSummary(User) returns (Summary);
+    rpc GetResult(User) returns (Result);
 }
 
 message User {
